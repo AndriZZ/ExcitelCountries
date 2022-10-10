@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">ExcitelCountries</string>
+    <string name="button_ok">OK</string>
+    <string name="error_retrieve_api">We\'ve encountered a problem while attempting to retrieve your data. Please try again.</string>
+    <string name="error_save_api">We\'ve encountered a problem while attempting to save your data. Please try again.</string>
+    <string name="error_general">Something went wrong</string>
+    <string name="countries">Countries</string>
 </resources>
