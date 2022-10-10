@@ -5,4 +5,6 @@
     <string name="error_save_api">We\'ve encountered a problem while attempting to save your data. Please try again.</string>
     <string name="error_general">Something went wrong</string>
     <string name="countries">Countries</string>
+    <string name="search_countries">Search through countries..</string>
+    <string name="no_results">No results found.</string>
 </resources>

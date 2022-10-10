@@ -1,11 +1,14 @@
 package com.andriivanov.excitelcountries.ui
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andriivanov.excitelcountries.R
@@ -26,7 +29,9 @@ class CountryListFragment : Fragment() {
     private val countriesViewModel: CountriesViewModel by viewModel()
     private val countryAdapter: CountryAdapter by lazy {
         CountryAdapter(
-            onCountryClick = { }
+            onCountryClick = { country ->
+                navigateToCountryDetails(country)
+            }
         )
     }
     private val handleCountriesLoaded = Observer<DataState<List<Country>>> { result ->
@@ -48,6 +53,10 @@ class CountryListFragment : Fragment() {
             )
         }
     }
+    private val handleCountriesFiltered = Observer<List<Country>> { countries ->
+        binding.tvNoResults.visibleOrGone(countries.isEmpty())
+        countryAdapter.submitList(countries)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,9 +72,42 @@ class CountryListFragment : Fragment() {
         countriesViewModel.loadCountries()
         // setup observers
         countriesViewModel.onCountriesLoaded.observe(viewLifecycleOwner, handleCountriesLoaded)
+        countriesViewModel.onCountriesFiltered.observe(viewLifecycleOwner, handleCountriesFiltered)
+        // setup search
+        setupSearch()
         // setup RecyclerView
         binding.rvCountries.adapter = countryAdapter
         binding.rvCountries.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+    }
+
+    private fun setupSearch() {
+        binding.inputSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(text: Editable?) {
+                val phrase = text.toString().trim()
+                onSearchInput(phrase)
+            }
+        })
+        binding.inputContainer.setEndIconOnClickListener {
+            countriesViewModel.setSearchPhrase("")
+            binding.inputSearch.text?.clear()
+        }
+    }
+
+    private fun onSearchInput(phrase: String) {
+        val isPhraseValid = phrase.isNotBlank() && phrase.length >= 3
+        if (isPhraseValid) {
+            countriesViewModel.setSearchPhrase(phrase)
+        } else {
+            countriesViewModel.setSearchPhrase("")
+        }
+    }
+
+    private fun navigateToCountryDetails(country: Country) {
+        val action =
+            CountryListFragmentDirections.actionCountryListFragmentToCountryDetailsFragment(country)
+        findNavController().navigate(action)
     }
 }
