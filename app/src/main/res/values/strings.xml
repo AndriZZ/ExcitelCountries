@@ -7,4 +7,7 @@
     <string name="countries">Countries</string>
     <string name="search_countries">Search through countries..</string>
     <string name="no_results">No results found.</string>
+    <string name="capital">Capital: %s</string>
+    <string name="region">Region: %s</string>
+    <string name="population">Population: %d</string>
 </resources>

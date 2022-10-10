@@ -9,6 +9,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.andriivanov.excitelcountries.R
+import com.andriivanov.excitelcountries.data.post.Country
 import com.andriivanov.excitelcountries.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
@@ -35,6 +36,11 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     ) {
         binding.toolbarTitle.text = when (destination.id) {
             R.id.countryListFragment -> getString(R.string.countries)
+            R.id.countryDetailsFragment -> {
+                val country = arguments?.getParcelable(CountryListFragment.ARG_COUNTRY) as Country?
+                    ?: throw IllegalStateException("Country not found!")
+                country.name
+            }
             else -> ""
         }
     }

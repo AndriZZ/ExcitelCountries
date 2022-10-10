@@ -29,7 +29,7 @@
         app:layout_constraintEnd_toStartOf="@id/guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+        app:shapeAppearanceOverlay="@style/RoundedImageView"
         app:strokeColor="@color/lotion"
         app:strokeWidth="@dimen/_2sdp"
         tools:src="@drawable/ic_circle" />

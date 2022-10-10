@@ -23,12 +23,12 @@
         <item name="android:textColor">@color/deep_koamaru</item>
     </style>
 
-    <style name="roundedImageViewRounded">
+    <style name="RoundedImageView">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
 
-    <style name="roundedCorners">
+    <style name="RoundedCornersImageView">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">10%</item>
     </style>
